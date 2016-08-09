@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.library.R;
 import com.gcl.bean.BorrowBook;
@@ -44,17 +45,18 @@ public class MainActivity extends Activity {
 		title.setText("借阅书籍");
 		left.setVisibility(View.INVISIBLE);
 		right.setImageResource(R.drawable.search);
-		
+
 		right.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				startActivity(new Intent(MainActivity.this, SearchActivity.class));
+				startActivity(new Intent(MainActivity.this,
+						SearchActivity.class));
 			}
 		});
-		
+
 		// 登录系统
-		new AsyncTask<String, Integer, String>(){
+		new AsyncTask<String, Integer, String>() {
 
 			@Override
 			protected String doInBackground(String... params) {
@@ -67,17 +69,24 @@ public class MainActivity extends Activity {
 				}
 				return "";
 			}
-			
+
 		}.execute("");
-		
+
 		// 获取数据
+		getBorrowedBook();
+	}
+	
+	/**
+	 * 获取已经借的书
+	 */
+	private void getBorrowedBook() {
 		new AsyncTask<String, Integer, List<BorrowBook>>() {
 
 			@Override
 			protected List<BorrowBook> doInBackground(String... params) {
 				return HtmlSer.getBorrowedBook();
 			}
-			
+
 			@Override
 			protected void onPostExecute(List<BorrowBook> result) {
 				lv.setAdapter(new BorrowAdapter(result));
@@ -85,6 +94,9 @@ public class MainActivity extends Activity {
 		}.execute("");
 	}
 
+	/**
+	 * adapter
+	 */
 	class BorrowAdapter extends BaseAdapter {
 
 		private List<BorrowBook> list;
@@ -115,28 +127,48 @@ public class MainActivity extends Activity {
 			if (convertView == null) {
 				holder = new ViewHolder();
 
-				convertView = View.inflate(MainActivity.this,R.layout.borrow_item, null);
+				convertView = View.inflate(MainActivity.this,
+						R.layout.borrow_item, null);
 				holder.order = (TextView) convertView.findViewById(R.id.order);
-				holder.name = (TextView) convertView.findViewById(R.id.book_name);
+				holder.name = (TextView) convertView
+						.findViewById(R.id.book_name);
 				holder.in = (TextView) convertView.findViewById(R.id.book_in);
 				holder.out = (TextView) convertView.findViewById(R.id.book_out);
 				holder.renew = (Button) convertView.findViewById(R.id.renew);
-				
+
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
 
 			final BorrowBook bBook = list.get(position);
-			holder.order.setText((position+1) + "");
+			holder.order.setText((position + 1) + "");
 			holder.in.setText("应还日期" + bBook.getReturnDate());
 			holder.out.setText("借阅日期" + bBook.getBorrowDate());
 			holder.name.setText(bBook.getBookName());
 			holder.renew.setOnClickListener(new OnClickListener() {
-				
+
 				@Override
 				public void onClick(View v) {
-					//
+					new AsyncTask<String, Integer, Boolean>() {
+
+						@Override
+						protected Boolean doInBackground(String... params) {
+							// HtmlSer
+							return HtmlSer.renewBook(params[0]);
+						}
+
+						@Override
+						protected void onPostExecute(Boolean result) {
+							if (result) {
+								getBorrowedBook();
+								Toast.makeText(MainActivity.this, "续借成功!", Toast.LENGTH_SHORT).show();
+							} else {
+								Toast.makeText(MainActivity.this, "不能续借...", Toast.LENGTH_SHORT).show();
+							}
+						}
+
+					}.execute(bBook.getNum());
 				}
 			});
 			return convertView;

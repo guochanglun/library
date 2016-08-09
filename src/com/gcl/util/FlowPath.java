@@ -81,14 +81,22 @@ public class FlowPath {
 	/**
 	 * 续借书籍
 	 */
-	public static String continueBorrow(String id)
-			throws ClientProtocolException, IOException {
+	public static String continueBorrow(String id){
 		String url = Client.renewUrl + "?bar_code=" + id + "&time="
 				+ new Date().getTime();
 		HttpGet get = new HttpGet(url);
-		CloseableHttpResponse response = Client.client.execute(get);
-		String result = EntityUtils.toString(response.getEntity(), "utf-8");
-		response.close();
+		String result = null;
+		try {
+			CloseableHttpResponse response = Client.client.execute(get);
+			result = EntityUtils.toString(response.getEntity(), "utf-8");
+			response.close();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return result;
 	}
 

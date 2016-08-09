@@ -58,7 +58,8 @@ public class HtmlSer {
 		}
 
 		List<Book> list = new ArrayList<>();
-		if(html == null ) return null;
+		if (html == null)
+			return null;
 		Document doc = Jsoup.parse(html);
 		Elements eles = doc.select(".list_books");
 		Book b = null;
@@ -97,5 +98,24 @@ public class HtmlSer {
 		}
 
 		return list;
+	}
+
+	/**
+	 * 续借
+	 */
+	public static Boolean renewBook(String id) {
+		String html = FlowPath.continueBorrow(id);
+		if (html == null) {
+			return false;
+		}
+
+		Document doc = Jsoup.parse(html);
+
+		Elements eles = doc.select("table");
+		if (eles.size() == 0) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
