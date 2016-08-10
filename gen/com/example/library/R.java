@@ -26,38 +26,46 @@ public final class R {
         public static final int btn_renew_sel=0x7f020001;
         public static final int btn_search_sel=0x7f020002;
         public static final int ic_launcher=0x7f020003;
-        public static final int logo=0x7f020004;
-        public static final int mine=0x7f020005;
-        public static final int progressbar=0x7f020006;
-        public static final int search=0x7f020007;
-        public static final int search_input_sharp=0x7f020008;
+        public static final int login_btn=0x7f020004;
+        public static final int login_input=0x7f020005;
+        public static final int logo=0x7f020006;
+        public static final int mine=0x7f020007;
+        public static final int progressbar=0x7f020008;
+        public static final int search=0x7f020009;
+        public static final int search_input_sharp=0x7f02000a;
     }
     public static final class id {
-        public static final int action_settings=0x7f080011;
-        public static final int book_in=0x7f08000b;
-        public static final int book_name=0x7f080009;
-        public static final int book_out=0x7f08000a;
-        public static final int borrow=0x7f080001;
-        public static final int container=0x7f080000;
-        public static final int left=0x7f080002;
-        public static final int order=0x7f080008;
-        public static final int progress=0x7f080004;
-        public static final int renew=0x7f08000c;
-        public static final int right=0x7f08000d;
-        public static final int search_author=0x7f08000f;
-        public static final int search_btn=0x7f080006;
-        public static final int search_list=0x7f080007;
-        public static final int search_name=0x7f080005;
-        public static final int search_publish=0x7f080010;
-        public static final int search_rest=0x7f08000e;
-        public static final int title=0x7f080003;
+        public static final int action_settings=0x7f080016;
+        public static final int book_in=0x7f080010;
+        public static final int book_name=0x7f08000e;
+        public static final int book_out=0x7f08000f;
+        public static final int borrow=0x7f080006;
+        public static final int container=0x7f080005;
+        public static final int go=0x7f080004;
+        public static final int imageView1=0x7f080001;
+        public static final int left=0x7f080007;
+        public static final int login=0x7f080000;
+        public static final int name=0x7f080002;
+        public static final int order=0x7f08000d;
+        public static final int progress=0x7f080009;
+        public static final int pwd=0x7f080003;
+        public static final int renew=0x7f080011;
+        public static final int right=0x7f080012;
+        public static final int search_author=0x7f080014;
+        public static final int search_btn=0x7f08000b;
+        public static final int search_list=0x7f08000c;
+        public static final int search_name=0x7f08000a;
+        public static final int search_publish=0x7f080015;
+        public static final int search_rest=0x7f080013;
+        public static final int title=0x7f080008;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int activity_search=0x7f030001;
-        public static final int borrow_item=0x7f030002;
-        public static final int header=0x7f030003;
-        public static final int search_item=0x7f030004;
+        public static final int activity_login=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int activity_search=0x7f030002;
+        public static final int borrow_item=0x7f030003;
+        public static final int header=0x7f030004;
+        public static final int search_item=0x7f030005;
     }
     public static final class menu {
         public static final int main=0x7f070000;

@@ -5,20 +5,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.impl.cookie.IgnoreSpec;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import android.util.Log;
+
 import com.gcl.bean.Book;
 import com.gcl.bean.BorrowBook;
+import com.gcl.library.LoginActivity;
 import com.gcl.util.FlowPath;
 
 /**
  * 解析html, 返回需要的数据
  */
 public class HtmlSer {
-
+	
+	/**
+	 * 登录
+	 */
+	public static boolean login(String name, String pwd) {
+		String result = FlowPath.login(name, pwd);
+		
+		if (result == null || result.contains("<form action=\"redr_verify.php\" name=\"frm_login\" method=\"POST\">")) {
+			return false;
+		}
+		return true;
+	}
+	
 	/**
 	 * 获取已经借过的书
 	 */

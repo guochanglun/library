@@ -1,6 +1,7 @@
 package com.gcl.util;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 import org.apache.http.ParseException;
@@ -21,16 +22,28 @@ public class FlowPath {
 	/**
 	 * 登录到系统
 	 */
-	public static void login(String loginuser, String passwd)
-			throws ClientProtocolException, IOException {
+	public static String login(String loginuser, String passwd) {
 		HttpPost post = new HttpPost(Client.loginUrl);
 
-		UrlEncodedFormEntity entity = Forms.login().setNumber(loginuser)
-				.setPasswd(passwd).build();
+		String result = null;
+		try {
+			UrlEncodedFormEntity entity = Forms.login().setNumber(loginuser)
+					.setPasswd(passwd).build();
 
-		post.setEntity(entity);
-		CloseableHttpResponse response = Client.client.execute(post);
-		response.close();
+			post.setEntity(entity);
+			CloseableHttpResponse response = Client.client.execute(post);
+			result = EntityUtils.toString(response.getEntity(), "utf-8");
+			response.close();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	/**
@@ -58,30 +71,26 @@ public class FlowPath {
 	/**
 	 * 搜索书籍
 	 */
-	public static String search(String bookname) throws ClientProtocolException, IOException {
-		String param = "?historyCount=1"
-				+ "&strSearchType=title"
-				+ "&match_flag=forward"
-				+ "&showmode=list"
-				+ "&displaypg=100"
-				+ "&sort=M_PUB_YEAR"
-				+ "&orderby=desc"
-				+ "&doctype=ALL"
-				+ "&strText="+bookname;
-		
+	public static String search(String bookname)
+			throws ClientProtocolException, IOException {
+		String param = "?historyCount=1" + "&strSearchType=title"
+				+ "&match_flag=forward" + "&showmode=list" + "&displaypg=100"
+				+ "&sort=M_PUB_YEAR" + "&orderby=desc" + "&doctype=ALL"
+				+ "&strText=" + bookname;
+
 		HttpGet get = new HttpGet(Client.searchUrl + param);
-		
+
 		CloseableHttpResponse response = Client.client.execute(get);
-		
+
 		String result = EntityUtils.toString(response.getEntity(), "utf-8");
-		
+
 		return result;
 	}
 
 	/**
 	 * 续借书籍
 	 */
-	public static String continueBorrow(String id){
+	public static String continueBorrow(String id) {
 		String url = Client.renewUrl + "?bar_code=" + id + "&time="
 				+ new Date().getTime();
 		HttpGet get = new HttpGet(url);

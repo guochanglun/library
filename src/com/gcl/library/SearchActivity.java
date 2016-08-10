@@ -19,6 +19,8 @@ import android.widget.Toast;
 import com.example.library.R;
 import com.gcl.bean.Book;
 import com.gcl.service.HtmlSer;
+import com.gcl.util.NetState;
+import com.gcl.util.ToastUtil;
 
 public class SearchActivity extends Activity {
 
@@ -59,6 +61,10 @@ public class SearchActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
+				if(!NetState.with(SearchActivity.this).detectNetState()){
+					ToastUtil.showMsg(SearchActivity.this, "网络未连接");
+					return;
+				}
 				String nameString = name.getText().toString();
 				if (nameString != null && nameString.length() != 0) {
 					go.setEnabled(false);

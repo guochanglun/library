@@ -23,6 +23,9 @@ import com.example.library.R;
 import com.gcl.bean.BorrowBook;
 import com.gcl.service.HtmlSer;
 import com.gcl.util.FlowPath;
+import com.gcl.util.NetState;
+import com.gcl.util.PreferenceUtil;
+import com.gcl.util.ToastUtil;
 
 public class MainActivity extends Activity {
 
@@ -37,6 +40,15 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		initView();
+
+		setListener();
+
+		// 获取数据
+		getBorrowedBook();
+	}
+
+	private void initView() {
 		title = (TextView) findViewById(R.id.title);
 		left = (ImageView) findViewById(R.id.left);
 		right = (ImageView) findViewById(R.id.right);
@@ -45,7 +57,9 @@ public class MainActivity extends Activity {
 		title.setText("借阅书籍");
 		left.setVisibility(View.INVISIBLE);
 		right.setImageResource(R.drawable.search);
+	}
 
+	private void setListener() {
 		right.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -54,28 +68,8 @@ public class MainActivity extends Activity {
 						SearchActivity.class));
 			}
 		});
-
-		// 登录系统
-		new AsyncTask<String, Integer, String>() {
-
-			@Override
-			protected String doInBackground(String... params) {
-				try {
-					FlowPath.login("14110501053", "454110");
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return "";
-			}
-
-		}.execute("");
-
-		// 获取数据
-		getBorrowedBook();
 	}
-	
+
 	/**
 	 * 获取已经借的书
 	 */
@@ -150,6 +144,10 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
+					if (!NetState.with(MainActivity.this).detectNetState()) {
+						ToastUtil.showMsg(MainActivity.this, "网络未连接");
+						return;
+					}
 					new AsyncTask<String, Integer, Boolean>() {
 
 						@Override
@@ -162,9 +160,11 @@ public class MainActivity extends Activity {
 						protected void onPostExecute(Boolean result) {
 							if (result) {
 								getBorrowedBook();
-								Toast.makeText(MainActivity.this, "续借成功!", Toast.LENGTH_SHORT).show();
+								Toast.makeText(MainActivity.this, "续借成功!",
+										Toast.LENGTH_SHORT).show();
 							} else {
-								Toast.makeText(MainActivity.this, "不能续借...", Toast.LENGTH_SHORT).show();
+								Toast.makeText(MainActivity.this, "不能续借...",
+										Toast.LENGTH_SHORT).show();
 							}
 						}
 
