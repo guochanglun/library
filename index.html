@@ -2,9 +2,191 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>library</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			font-family: '微软雅黑';
+		}
+		html{
+			font-size: 62.5%;
+		}
+		body{
+			background-color: #fafafa;
+		}
+		h1{
+			font-size: 3rem;
+			margin: 1rem;
+		}
+		.content{
+			margin: auto;
+			width: 85%;
+		}
+		
+		.content section{
+			background-color: #fff;
+			margin-bottom: 2.5rem;
+			padding: 2rem;
+			box-shadow: 5px 5px 10px #ddd;
+		}
+		
+		.content section h2{
+			font-size: 2rem;
+			padding: 1rem;
+		}
+
+		.content section p{
+			font-size: 1.6rem;
+			line-height: 2;
+			margin: 1.5rem;
+			color: #444;
+		}
+		.content section p i{
+			font-style: normal;
+			padding: 0.5rem 1rem;
+			border-radius: 5px;
+			margin-right: 1em;
+			color: #fff;
+			background-color: #123456;
+			box-shadow: inset 0 0 5px #666;
+		}
+		header{
+			background-color: #123456;
+			color: #fff;
+			padding: 1rem;
+			margin-bottom: 2rem;
+		}
+		header p{
+			padding-left: 1rem;
+			font-size: 1.8rem;
+			margin-bottom: 1rem;
+			color: #eee;
+		}
+		ul{
+			width: 100%;
+			margin-top: 2rem;
+		}
+		ul li{
+			text-decoration: none;
+			display: inline-block;
+			width: 32%;
+		}
+
+		ul li + li{
+			margin-left: -1px;
+		}
+		ul li img{
+			width: 90%;
+			max-width: 350px;
+			margin-left: 15%;
+			box-shadow: 5px 5px 10px #ddd;
+		}
+		ul li a{
+			margin: auto;
+			text-align:center;
+			display: block;
+			text-decoration: none;
+			font-size: 1.8rem;
+			padding: 1.5rem;
+			border-radius: 5px;
+			width: 50%;
+			background-color: #124455;
+			color: #fff;
+		}
+		ul li a:hover{
+			background-color: #123456;
+		}
+		footer{
+			margin: 5rem;
+			text-align:center;
+			font-size: 1.6rem;
+			color: #666;
+		}
+		
+		@media only screen and (max-width: 68.75em) {
+			.content{
+				width: 90%;
+			}
+			
+		}
+
+		@media only screen and (max-width: 37.5em) {
+			.content{
+				width: 97%;
+			}
+			header{
+				text-align: center;
+			}
+
+			header h1{
+				font-size: 2rem;
+			}
+
+		    ul li{
+				text-decoration: none;
+				width: 90%;
+				margin-top: 2rem;
+			}
+			
+		}
+	</style>
 </head>
 <body>
-	<h1>Welcome, Library!</h1>
+	<div class="content">
+		<header>
+			<h1>掌上图书馆•山理工</h1>
+			<p>模拟登录山理工图书馆，并提供续借、搜索功能！</p>
+		</header>
+	
+		<!-- 页面 -->	
+		<section>
+			<h2>界面展示</h2>
+			<p><i>精美界面</i>app提供了精美的界面（至少我看着是这样），而且小巧易用，绝不占用用户的内存空间！</p>
+			<ul>
+				<li><img src="img/login.png" alt="登录页"></li>
+				<li><img src="img/index.png" alt="首页"></li>
+				<li><img src="img/search.png" alt="搜索页"></li>
+			</ul>
+		</section>
+
+		<!-- 技术 -->	
+		<section>
+			<h2>技术解析</h2>
+			<p><i>模拟登录</i>使用httpclient-android模拟登录，注意是<em>httpclient-android</em>。</p>
+			<p><i>其它</i>没有了。</p>
+		</section>
+
+		<!-- 技术 -->	
+		<section>
+			<h2>遇到的问题</h2>
+			<p><i>模拟登录</i>上面说到使用<em>httpclient-android</em>进行模拟登录，这是有原因的。一开始我是在eclipse上写的模拟登录的代码，成功登录到图书馆，用的httpclient。
+			但是把代码拷到Android项目中就出现异常，是android虚拟机报错。具体是什么错误我也不太清楚，是网络安全方面的。</p>
+			<p><i>异常处理</i>以前也没太注意过处理异常，在这里可是上了一课。由于要进行网络请求，会抛出各种网络异常，一开始没怎么处理，捕获以后就放那了。到运行的时候才发现app太脆弱了，一言不合就闪退。我给函数添加了返回值，返回false或null，遇到异常就让函数返回，让接收者根据返回的结果作出判断。</p>
+		</section>
+
+		<!-- 下载 -->	
+		<section>
+			<h2>下载</h2>
+			<p><i>下载路径</i>提供了github源码，app下载方式。</p>
+			<ul>
+				<li><a href="https://github.com/guochanglun/library" target="blank">github</a></li>
+				<li><a href="http://www.gcl123.cn/library.apk">app下载</a></li>
+			</ul>
+		</section>
+
+		<!-- 总结 -->	
+		<section>
+			<h2>总结</h2>
+			<p><i>任重道远</i>感觉各种知识在我面前就像山一样，路漫漫，吾将上下而求索！</p>
+			<p><i>关于app</i>编程，就是玩嘛！</p>
+		</section>
+
+		<footer>
+			gcl出品
+		</footer>
+		
+	</div>
 </body>
 </html>
