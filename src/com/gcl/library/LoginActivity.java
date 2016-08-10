@@ -69,7 +69,7 @@ public class LoginActivity extends Activity {
 			ToastUtil.showMsg(this, "网络未连接");
 			return;
 		}
-		if (name != null && pwd != null) {
+		if (name != null && pwd != null && name.length() != 0 && pwd.length() != 0) {
 			login(name, pwd);
 		}
 	}

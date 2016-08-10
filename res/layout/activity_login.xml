@@ -37,6 +37,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:paddingLeft="10dp"
+        android:inputType="textPassword"
         android:background="@drawable/login_input"
         android:hint="密码"
         android:ems="14" />

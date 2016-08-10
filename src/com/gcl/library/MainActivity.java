@@ -1,9 +1,6 @@
 package com.gcl.library;
 
-import java.io.IOException;
 import java.util.List;
-
-import org.apache.http.client.ClientProtocolException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,7 +19,6 @@ import android.widget.Toast;
 import com.example.library.R;
 import com.gcl.bean.BorrowBook;
 import com.gcl.service.HtmlSer;
-import com.gcl.util.FlowPath;
 import com.gcl.util.NetState;
 import com.gcl.util.PreferenceUtil;
 import com.gcl.util.ToastUtil;
@@ -55,7 +51,7 @@ public class MainActivity extends Activity {
 		lv = (ListView) findViewById(R.id.borrow);
 
 		title.setText("借阅书籍");
-		left.setVisibility(View.INVISIBLE);
+		left.setImageResource(R.drawable.logout);
 		right.setImageResource(R.drawable.search);
 	}
 
@@ -66,6 +62,17 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				startActivity(new Intent(MainActivity.this,
 						SearchActivity.class));
+			}
+		});
+		
+		left.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				PreferenceUtil.With(MainActivity.this).setItem("lib_name", "");
+				PreferenceUtil.With(MainActivity.this).setItem("lib_pwd", "");
+				startActivity(new Intent(MainActivity.this, LoginActivity.class));
+				MainActivity.this.finish();
 			}
 		});
 	}
