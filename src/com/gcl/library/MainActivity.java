@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,7 @@ import com.gcl.service.HtmlSer;
 import com.gcl.util.NetState;
 import com.gcl.util.PreferenceUtil;
 import com.gcl.util.ToastUtil;
+import com.gcl.view.MenuListView;
 
 public class MainActivity extends Activity {
 
@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 	private ImageView left;
 	private ImageView right;
 
-	private ListView lv;
+	private MenuListView lv;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,8 @@ public class MainActivity extends Activity {
 		title = (TextView) findViewById(R.id.title);
 		left = (ImageView) findViewById(R.id.left);
 		right = (ImageView) findViewById(R.id.right);
-		lv = (ListView) findViewById(R.id.borrow);
+		lv = (MenuListView) findViewById(R.id.borrow);
+		lv.initSlideMode(MenuListView.MOD_RIGHT);
 
 		title.setText("借阅书籍");
 		left.setImageResource(R.drawable.logout);
@@ -64,9 +65,9 @@ public class MainActivity extends Activity {
 						SearchActivity.class));
 			}
 		});
-		
+
 		left.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				PreferenceUtil.With(MainActivity.this).setItem("lib_name", "");
@@ -135,7 +136,7 @@ public class MainActivity extends Activity {
 						.findViewById(R.id.book_name);
 				holder.in = (TextView) convertView.findViewById(R.id.book_in);
 				holder.out = (TextView) convertView.findViewById(R.id.book_out);
-				holder.renew = (Button) convertView.findViewById(R.id.renew);
+				holder.renew = (TextView) convertView.findViewById(R.id.renew);
 
 				convertView.setTag(holder);
 			} else {
@@ -151,6 +152,9 @@ public class MainActivity extends Activity {
 
 				@Override
 				public void onClick(View v) {
+					
+					lv.scrollBack();
+					
 					if (!NetState.with(MainActivity.this).detectNetState()) {
 						ToastUtil.showMsg(MainActivity.this, "网络未连接");
 						return;
@@ -165,6 +169,7 @@ public class MainActivity extends Activity {
 
 						@Override
 						protected void onPostExecute(Boolean result) {
+
 							if (result) {
 								getBorrowedBook();
 								Toast.makeText(MainActivity.this, "续借成功!",
@@ -188,6 +193,6 @@ public class MainActivity extends Activity {
 		TextView order;
 		TextView in;
 		TextView out;
-		Button renew;
+		TextView renew;
 	}
 }

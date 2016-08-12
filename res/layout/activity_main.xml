@@ -9,11 +9,14 @@
     
     <include layout="@layout/header"/>
     
-    <ListView 
+    <com.gcl.view.MenuListView 
         android:id="@+id/borrow"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
+        android:layout_height="wrap_content"
+        android:listSelector="@drawable/borrow_sel"
+        android:divider="#ccc"
+        android:dividerHeight="1px">
+    </com.gcl.view.MenuListView>
     
 </LinearLayout>
 

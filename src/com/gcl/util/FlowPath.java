@@ -12,8 +12,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
-
 import com.gcl.bean.Client;
 import com.gcl.form.Forms;
 
