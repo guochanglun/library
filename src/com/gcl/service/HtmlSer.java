@@ -46,7 +46,12 @@ public class HtmlSer {
 		Document doc = Jsoup.parse(html);
 		Element ele = doc.select("table").get(0);
 		Elements trEles = ele.getElementsByTag("tr");
-
+		
+		// 检查借的书籍是否为空
+		if(ele == null || trEles == null){
+			return list;
+		}
+		
 		for (int i = 1; i < trEles.size(); i++) {
 			Elements tdEles = trEles.get(i).getElementsByTag("td");
 			BorrowBook bb = new BorrowBook();
